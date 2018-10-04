@@ -21,10 +21,16 @@ namespace GEX {
 	protected:
 		void						updateCurrent(sf::Time dt) override;
 	private:
+		void						updateMovementPattern(sf::Time dt);
+		float						getMaxSpeed() const;
+	private:
 		sf::Sprite					_sprite;
 		AircraftType				_type;
 		TextNode*					_healthDisplay;
 		TextNode*					_missileDisplay;
+
+		float						_travelDistance;
+		std::size_t					_directionIndex;
 
 	};
 }

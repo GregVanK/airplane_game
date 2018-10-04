@@ -7,6 +7,7 @@
 #include "Aircraft.h"
 #include "DataTables.h"
 #include <string>
+#include "Utility.h"
 
 namespace GEX {
 	
@@ -55,8 +56,34 @@ namespace GEX {
 
 	void Aircraft::updateCurrent(sf::Time dt)
 	{
+		updateMovementPattern(dt);
 		Entity::updateCurrent(dt);
 		updateTexts();
+	}
+
+	void Aircraft::updateMovementPattern(sf::Time dt)
+	{
+		//movement pattern
+		const std::vector<Direction>& directions = TABLE.at(_type).directions;
+		if (!directions.empty()) {
+			if (_travelDistance > (directions[_directionIndex].distance)) {
+				_directionIndex = (++_directionIndex) % directions.size();
+				_travelDistance = 0;
+			}
+			float radians = toRadian(directions[_directionIndex].angle + 90.f);
+			float vx = getMaxSpeed() * std::cos(radians);
+			float vy = getMaxSpeed() * std::sin(radians);
+			setVelocity(vx, vy);
+			_travelDistance += getMaxSpeed() * dt.asSeconds();
+		}
+		
+
+		
+	}
+
+	float Aircraft::getMaxSpeed() const
+	{
+		return TABLE.at(_type).speed;
 	}
 
 }
