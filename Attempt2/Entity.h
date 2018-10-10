@@ -22,7 +22,7 @@ namespace GEX {
 		void			destroy();
 		virtual bool	isDestroyed() const;
 	protected:
-		void	updateCurrent(sf::Time dt) override;
+		void	updateCurrent(sf::Time dt,CommandQueue& commands) override;
 	private:
 		sf::Vector2f	_velocity;
 		int				_hitPoints;

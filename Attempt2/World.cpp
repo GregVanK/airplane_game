@@ -36,7 +36,7 @@ namespace GEX {
 		}
 
 		adaptPlayerVelocity();
-		_sceneGraph.update(dt);
+		_sceneGraph.update(dt,_command);
 		adaptPlayerPosition();
 		spawnEnemies();
 		

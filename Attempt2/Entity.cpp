@@ -66,7 +66,7 @@ bool GEX::Entity::isDestroyed() const
 	return _hitPoints <= 0;
 }
 
-void GEX::Entity::updateCurrent(sf::Time dt)
+void GEX::Entity::updateCurrent(sf::Time dt,CommandQueue& commands)
 {
 	move(_velocity * dt.asSeconds());
 }

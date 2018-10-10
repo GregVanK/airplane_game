@@ -33,10 +33,10 @@ namespace GEX {
 		return result;
 
 	}
-	void SceneNode::update(sf::Time dt)
+	void SceneNode::update(sf::Time dt, CommandQueue& commands)
 	{
-		updateCurrent(dt);
-		updateChildren(dt);
+		updateCurrent(dt,commands);
+		updateChildren(dt,commands);
 	}
 	sf::Transform SceneNode::getWorldTransform() const
 	{
@@ -63,14 +63,14 @@ namespace GEX {
 		return getWorldTransform() * sf::Vector2f();
 	}
 	
-	void SceneNode::updateCurrent(sf::Time dt)
+	void SceneNode::updateCurrent(sf::Time dt, CommandQueue& commands)
 	{
 		//do nothing
 	}
-	void SceneNode::updateChildren(sf::Time dt)
+	void SceneNode::updateChildren(sf::Time dt, CommandQueue& commands)
 	{
 		for (Ptr& child : _children) {
-			child->update(dt);
+			child->update(dt,commands);
 		}
 	}
 	void SceneNode::draw(sf::RenderTarget & target, sf::RenderStates states) const

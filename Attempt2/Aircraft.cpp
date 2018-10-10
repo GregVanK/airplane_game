@@ -54,10 +54,10 @@ namespace GEX {
 		_healthDisplay->setRotation(-getRotation());
 	}
 
-	void Aircraft::updateCurrent(sf::Time dt)
+	void Aircraft::updateCurrent(sf::Time dt, CommandQueue& commands)
 	{
 		updateMovementPattern(dt);
-		Entity::updateCurrent(dt);
+		Entity::updateCurrent(dt,commands);
 		updateTexts();
 	}
 

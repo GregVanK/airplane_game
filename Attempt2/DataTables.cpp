@@ -3,6 +3,12 @@
 
 
 
+
+std::map<GEX::Projectile::Type, GEX::ProjectileData> GEX::initalizeProjectileData()
+{
+	return std::map<Projectile::Type, ProjectileData>();
+}
+
 std::map<GEX::AircraftType, GEX::AircraftData> GEX::initalizeAircraftData()
 {
 

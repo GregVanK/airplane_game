@@ -19,7 +19,7 @@ namespace GEX {
 		unsigned int				getCategory() const override;
 		void						updateTexts(); //update mini hp/ammo
 	protected:
-		void						updateCurrent(sf::Time dt) override;
+		void						updateCurrent(sf::Time dt, CommandQueue& commands) override;
 	private:
 		void						updateMovementPattern(sf::Time dt);
 		float						getMaxSpeed() const;

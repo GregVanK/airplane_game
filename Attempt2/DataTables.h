@@ -1,6 +1,8 @@
 #pragma once
 #include "TextureManager.h"
 #include "Aircraft.h"
+#include "Projectile.h"
+
 #include <map>
 namespace GEX {
 	struct Direction {
@@ -18,5 +20,12 @@ namespace GEX {
 		TextureID				texture;
 		std::vector<Direction>	directions;
 	};
+
+	struct ProjectileData {
+		int						damage;
+		float					speed;
+		TextureID				texture;
+	};
+	std::map<Projectile::Type, ProjectileData> initalizeProjectileData();
 	std::map<AircraftType, AircraftData> initalizeAircraftData();
 }

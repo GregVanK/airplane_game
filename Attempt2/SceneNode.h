@@ -15,6 +15,7 @@
 
 namespace GEX
 {
+	class CommandQueue;
 	struct Command;
 	class SceneNode : public sf::Transformable, public sf::Drawable
 	{
@@ -27,7 +28,7 @@ namespace GEX
 		SceneNode& operator=(SceneNode&) = delete;
 		void			attachChild(Ptr child);
 		Ptr				detachChild(const SceneNode& ptr);
-		void			update(sf::Time dt);
+		void			update(sf::Time dt, CommandQueue& commands);
 		sf::Vector2f	getWorldPosition() const;
 		sf::Transform	getWorldTransform() const;
 
@@ -36,8 +37,8 @@ namespace GEX
 		virtual unsigned int getCategory() const;
 
 	protected:
-		virtual void	updateCurrent(sf::Time dt);
-		void			updateChildren(sf::Time dt);
+		virtual void	updateCurrent(sf::Time dt,CommandQueue& commands);
+		void			updateChildren(sf::Time dt,CommandQueue& commands);
 	private:
 		void			draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 		virtual void	drawcurrent(sf::RenderTarget& target, sf::RenderStates states) const;
