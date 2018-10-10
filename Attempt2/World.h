@@ -29,11 +29,27 @@ namespace GEX {
 		void adaptPlayerVelocity();
 		void							draw();
 		CommandQueue&					getCommandQueue();
+
+		void							addEnemies();
+		void							addEnemy(AircraftType type, float relx, float rely);
+		void							spawnEnemies();
+
+		sf::FloatRect					getViewBounds() const;
+		sf::FloatRect					getBattlefieldBounds() const;
 	private:
 		enum Layer {
 			Background = 0,
 			Air,
 			LayerCount
+		};
+		struct SpawnPoint {
+			SpawnPoint(AircraftType type, float x, float y)
+			:type(type),
+			x(x),
+			y(y){}
+			AircraftType type;
+			float x;
+			float y;
 		};
 	private:
 		void							loadTextures();
@@ -50,8 +66,8 @@ namespace GEX {
 		sf::Vector2f					_spawnPosition;
 		float							_scrollSpeeds;
 		Aircraft*						_player;
-		std::unique_ptr<Aircraft> leftEscort;
 
+		std::vector<SpawnPoint>			_enemySpawnPoints;
 	};
 
 
