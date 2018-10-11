@@ -27,6 +27,8 @@ namespace GEX {
 		_keyBindings[sf::Keyboard::W] = Action::MoveUp;
 		_keyBindings[sf::Keyboard::S] = Action::MoveDown;
 		_keyBindings[sf::Keyboard::D] = Action::MoveRight;
+		_keyBindings[sf::Keyboard::Space] = Action::FireBullet;
+		_keyBindings[sf::Keyboard::M] = Action::LaunchMissile;
 		
 		//connect actions to bindings
 		initalizeActions();
@@ -41,6 +43,11 @@ namespace GEX {
 		_actionBindings[Action::RotateLeft].category = Category::EnemyAircraft;
 		_actionBindings[Action::RotateRight].category = Category::EnemyAircraft;
 
+		_actionBindings[Action::FireBullet].action = derivedAction<Aircraft>(std::bind(&Aircraft::fire,std::placeholders::_1));
+		_actionBindings[Action::FireBullet].category = Category::PlayerAircraft;
+
+		_actionBindings[Action::LaunchMissile].action = derivedAction<Aircraft>(std::bind(&Aircraft::launchMissle, std::placeholders::_1));
+		_actionBindings[Action::LaunchMissile].category = Category::PlayerAircraft;
 	}
 	void PlayerControl::handleEvent(const sf::Event & event, CommandQueue & commands)
 	{

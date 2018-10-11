@@ -116,13 +116,16 @@ namespace GEX {
 		_textures.load(GEX::TextureID::Eagle, "Media/Textures/Eagle.png");
 		_textures.load(GEX::TextureID::Raptor, "Media/Textures/Raptor.png");
 		_textures.load(GEX::TextureID::Avenger, "Media/Textures/Avenger.png");
+		_textures.load(GEX::TextureID::Bullet, "Media/Textures/Bullet.png");
+		_textures.load(GEX::TextureID::Missile, "Media/Textures/Missile.png");
 		
 	}
 	void World::buildScene()
 	{
 		//initalizes layers
 		for (int i = 0; i < LayerCount; ++i) {
-			SceneNode::Ptr layer(new SceneNode());
+			auto category = (i == Air) ? Category::Type::AirSceneLayer : Category::Type::None;
+			SceneNode::Ptr layer(new SceneNode(category));
 			_sceneLayers.push_back(layer.get());
 			_sceneGraph.attachChild(std::move(layer));
 		}

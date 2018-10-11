@@ -15,6 +15,6 @@ namespace Category {
 		EnemyAircraft	=1 << 3,
 		EnemeyProjectile =1 << 4,
 		AlliedProjectile =1 << 5,
-
+		AirSceneLayer	=1 << 6,
 	};
 }

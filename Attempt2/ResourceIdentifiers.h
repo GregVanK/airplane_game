@@ -2,7 +2,8 @@
 #pragma once
 namespace GEX {
 	enum class TextureID { 
-		Landscape, 
+		Landscape,
+		Bullet,
 		Missile, 
 		Eagle, 
 		Raptor, 

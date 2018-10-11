@@ -18,6 +18,7 @@ unsigned int GEX::Projectile::getCategory() const
 		return Category::EnemeyProjectile;
 	if (_type == Type::AlliedBullet)
 		return Category::AlliedProjectile;
+	return Category::EnemeyProjectile;
 }
 
 float GEX::Projectile::getMaxSpeed() const

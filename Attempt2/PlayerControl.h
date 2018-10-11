@@ -19,7 +19,9 @@ namespace GEX {
 		MoveUp,
 		MoveDown,
 		RotateRight,
-		RotateLeft
+		RotateLeft,
+		FireBullet,
+		LaunchMissile
 	};
 	class PlayerControl
 	{

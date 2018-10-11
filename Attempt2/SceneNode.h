@@ -22,8 +22,8 @@ namespace GEX
 	public:
 		using Ptr = std::unique_ptr<SceneNode> ;
 	public:
-		SceneNode();
-		virtual			~SceneNode();
+		SceneNode(Category::Type category = Category::Type::None);
+		virtual			~SceneNode() = default;
 		SceneNode(const SceneNode&) = delete;
 		SceneNode& operator=(SceneNode&) = delete;
 		void			attachChild(Ptr child);
@@ -44,8 +44,9 @@ namespace GEX
 		virtual void	drawcurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 		void			drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
 	private:
-		SceneNode* _parent;
-		std::vector <Ptr> _children;
+		SceneNode*			_parent;
+		std::vector <Ptr>	_children;
+		Category::Type		_category;
 	};
 }
 

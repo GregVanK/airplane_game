@@ -8,15 +8,14 @@
 #include <cassert>
 #include "Command.h"
 namespace GEX {
-	SceneNode::SceneNode() :
+	SceneNode::SceneNode(Category::Type category) :
 		_children(),
-		_parent(nullptr)
+		_parent(nullptr),
+		_category(category)
 	{
 
 	}
-	SceneNode::~SceneNode()
-	{
-	}
+
 
 	void SceneNode::attachChild(Ptr child) {
 		child->_parent = this;
@@ -56,7 +55,7 @@ namespace GEX {
 
 	unsigned int SceneNode::getCategory() const
 	{
-		return Category::Type::None;
+		return _category;
 	}
 	sf::Vector2f SceneNode::getWorldPosition() const
 	{
