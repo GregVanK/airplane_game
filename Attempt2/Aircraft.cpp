@@ -26,14 +26,19 @@ namespace GEX {
 		_fireSpreadLevel(1),
 		_isFiring(false),
 		_fireCountdown(sf::Time::Zero),
-		_fireCommand()
+		_fireCommand(),
+		_missileAmmo(20)
 	{
 		//Set up commands
 		_fireCommand.category = Category::AirSceneLayer;
 		_fireCommand.action = [this, &textures](SceneNode& node, sf::Time dt) {
-			createBullets(node, textures);
+			//createBullets(node, textures);
 		};
-
+		
+		_launchMissileCommand.category = Category::AirSceneLayer;
+		_launchMissileCommand.action = [this, &textures](SceneNode& node, sf::Time dt) {
+			createProjectile(node, Projectile::Type::Missile, 0.f, 0.5f, textures);
+		};
 		centerOrigin(_sprite);
 
 		std::unique_ptr<TextNode> health(new TextNode(""));
@@ -41,6 +46,7 @@ namespace GEX {
 		attachChild(std::move(health));
 
 	}
+	
 
 	
 	void Aircraft::drawcurrent(sf::RenderTarget & target, sf::RenderStates states) const
@@ -76,6 +82,7 @@ namespace GEX {
 
 	void Aircraft::launchMissle()
 	{
+		_isLaunchingMissile = true;
 	}
 
 	void Aircraft::updateCurrent(sf::Time dt, CommandQueue& commands)
@@ -159,10 +166,14 @@ namespace GEX {
 			_fireCountdown -= dt;
 		}
 
-		//if (isLaunchMissle) {
-		//	commands.push(_launchMissleCommand);
-		//	isLauncMissile = false;
-		//}
+		if (_isLaunchingMissile)
+		{
+			if (_missileAmmo > 0){
+				commands.push(_launchMissileCommand);
+			_isLaunchingMissile = false;
+			_missileAmmo--;
+			}
+		}
 	}
 
 	bool Aircraft::isAllied()

@@ -77,6 +77,7 @@ namespace GEX {
 		case Action::MoveDown:
 		case Action::RotateLeft:
 		case Action::RotateRight:
+		case Action::FireBullet:
 			return true;
 			break;
 		default:

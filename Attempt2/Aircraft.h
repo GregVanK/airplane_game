@@ -39,14 +39,17 @@ namespace GEX {
 
 		float						_travelDistance;
 		std::size_t					_directionIndex;
+		int							_missileAmmo;
 
 		int							_fireRateLevel;
 		int							_fireSpreadLevel;
 
 		bool						_isFiring;
+		bool						_isLaunchingMissile;
 		sf::Time					_fireCountdown;
 
 		Command						_fireCommand;
+		Command						_launchMissileCommand;
 	};
 }
 
