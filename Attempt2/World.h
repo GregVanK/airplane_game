@@ -54,6 +54,7 @@ namespace GEX {
 	private:
 		void							loadTextures();
 		void							buildScene();
+		void							guideMissiles();
 	private:
 		sf::RenderWindow&				_window;
 		sf::View						_worldview;
@@ -68,6 +69,8 @@ namespace GEX {
 		Aircraft*						_player;
 
 		std::vector<SpawnPoint>			_enemySpawnPoints;
+
+		std::vector<Aircraft*>			_activeEnemies;
 	};
 
 

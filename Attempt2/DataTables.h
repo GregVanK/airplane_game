@@ -2,7 +2,7 @@
 #include "TextureManager.h"
 #include "Aircraft.h"
 #include "Projectile.h"
-
+#include "Pickup.h"
 #include <map>
 namespace GEX {
 	struct Direction {
@@ -27,6 +27,11 @@ namespace GEX {
 		float					speed;
 		TextureID				texture;
 	};
+	struct PickupData {
+		std::function<void(Aircraft&)>	action;
+		TextureID						texture;
+	};
+	std::map<Pickup::Type, PickupData>		initalizePickupData();
 	std::map<Projectile::Type, ProjectileData> initalizeProjectileData();
 	std::map<AircraftType, AircraftData> initalizeAircraftData();
 }

@@ -32,7 +32,7 @@ namespace GEX {
 		//Set up commands
 		_fireCommand.category = Category::AirSceneLayer;
 		_fireCommand.action = [this, &textures](SceneNode& node, sf::Time dt) {
-			//createBullets(node, textures);
+			createBullets(node, textures);
 		};
 		
 		_launchMissileCommand.category = Category::AirSceneLayer;
@@ -83,6 +83,28 @@ namespace GEX {
 	void Aircraft::launchMissle()
 	{
 		_isLaunchingMissile = true;
+	}
+
+	void Aircraft::increaseFireRate()
+	{
+		if (_fireRateLevel < 10)
+			++_fireRateLevel;
+	}
+
+	void Aircraft::increaseFireSpread()
+	{
+		if (_fireSpreadLevel < 3)
+			++_fireSpreadLevel;
+	}
+
+	void Aircraft::collectMissiles(unsigned int count)
+	{
+		_missileAmmo += count;
+	}
+
+	sf::FloatRect Aircraft::getBoundingBox() const
+	{
+		return getWorldTransform().transformRect(_sprite.getGlobalBounds());
 	}
 
 	void Aircraft::updateCurrent(sf::Time dt, CommandQueue& commands)

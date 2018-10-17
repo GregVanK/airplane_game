@@ -7,6 +7,8 @@
 #include <algorithm>
 #include <cassert>
 #include "Command.h"
+#include <SFML\Graphics\RectangleShape.hpp>
+#include <SFML\Graphics\RenderTarget.hpp>
 namespace GEX {
 	SceneNode::SceneNode(Category::Type category) :
 		_children(),
@@ -57,6 +59,22 @@ namespace GEX {
 	{
 		return _category;
 	}
+	sf::FloatRect SceneNode::getBoundingBox() const
+	{
+		return sf::FloatRect();
+	}
+	void SceneNode::drawBoundingBox(sf::RenderTarget & target, sf::RenderStates states) const
+	{
+		sf::FloatRect rect = getBoundingBox();
+
+		sf::RectangleShape box;
+		box.setPosition(sf::Vector2f(rect.left, rect.top));
+		box.setSize(sf::Vector2f(rect.width, rect.height));
+		box.setFillColor(sf::Color::Transparent);
+		box.setOutlineColor(sf::Color::Green);
+		box.setOutlineThickness(5.f);
+		target.draw(box);
+	}
 	sf::Vector2f SceneNode::getWorldPosition() const
 	{
 		return getWorldTransform() * sf::Vector2f();
@@ -77,6 +95,8 @@ namespace GEX {
 		states.transform *= getTransform();
 		drawcurrent(target, states);
 		drawChildren(target, states);
+
+		drawBoundingBox(target, states);
 	}
 	void SceneNode::drawcurrent(sf::RenderTarget & target, sf::RenderStates states) const
 	{
@@ -88,5 +108,9 @@ namespace GEX {
 		for (const Ptr& child : _children) {
 			child->draw(target, states);
 		}
+	}
+	float distance(const SceneNode & rhs, const SceneNode & lhs)
+	{
+		return length(lhs.getWorldPosition() - rhs.getWorldPosition());
 	}
 }

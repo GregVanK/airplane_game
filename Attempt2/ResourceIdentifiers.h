@@ -9,7 +9,11 @@ namespace GEX {
 		Raptor, 
 		Avenger, 
 		TitleScreen, 
-		GexScreen };
+		GexScreen,
+		HealthRefill,
+		MissileRefill,
+		FireSpread,
+		FireRate};
 	enum class FontID {
 		Main
 	};

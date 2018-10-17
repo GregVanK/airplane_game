@@ -11,6 +11,7 @@
 #include <vector>
 #include <memory>
 #include "Category.h"
+#include "Utility.h"
 //forward declaration
 
 namespace GEX
@@ -33,9 +34,10 @@ namespace GEX
 		sf::Transform	getWorldTransform() const;
 
 
-		void			onCommand(const Command& command, sf::Time dt);
-		virtual unsigned int getCategory() const;
-
+		void						onCommand(const Command& command, sf::Time dt);
+		virtual unsigned int		getCategory() const;
+		virtual sf::FloatRect		getBoundingBox() const;
+		void						drawBoundingBox(sf::RenderTarget& target, sf::RenderStates states)const;
 	protected:
 		virtual void	updateCurrent(sf::Time dt,CommandQueue& commands);
 		void			updateChildren(sf::Time dt,CommandQueue& commands);
@@ -48,5 +50,6 @@ namespace GEX
 		std::vector <Ptr>	_children;
 		Category::Type		_category;
 	};
+	float distance(const SceneNode& rhs, const SceneNode& lhs);
 }
 

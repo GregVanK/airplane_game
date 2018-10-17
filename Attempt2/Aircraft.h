@@ -22,6 +22,10 @@ namespace GEX {
 		void						updateTexts(); //update mini hp/ammo
 		void						fire();
 		void						launchMissle();
+		void						increaseFireRate();
+		void						increaseFireSpread();
+		void						collectMissiles(unsigned int count);
+		sf::FloatRect				getBoundingBox()const override;
 	protected:
 		void						updateCurrent(sf::Time dt, CommandQueue& commands) override;
 	private:

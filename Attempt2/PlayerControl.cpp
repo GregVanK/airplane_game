@@ -87,7 +87,7 @@ namespace GEX {
 
 	}
 	void PlayerControl::initalizeActions() {
-		const float playerSpeed = 200.f;
+		const float playerSpeed = 400.f;
 		_actionBindings[Action::MoveLeft].action = derivedAction<Aircraft>(AircraftMover(-playerSpeed, 0.f));
 		_actionBindings[Action::MoveRight].action = derivedAction<Aircraft>(AircraftMover(+playerSpeed, 0.f));
 		_actionBindings[Action::MoveUp].action = derivedAction<Aircraft>(AircraftMover(0.f, -playerSpeed));

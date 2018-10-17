@@ -14,10 +14,13 @@ namespace GEX{
 		//sf::FloatRect				getBoundingRect() const override;
 		float						getMaxSpeed() const;
 		int							getDamage() const;
+		bool						isGuided() const;
+		void						guidedTowards(sf::Vector2f position);
 	private:
 		void						updateCurrent(sf::Time dt,CommandQueue& commands) override;
 		void						drawcurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
-
+		sf::FloatRect				getBoundingBox()const override;
+		
 	private:
 		Type						_type;
 		sf::Sprite					_sprite;
