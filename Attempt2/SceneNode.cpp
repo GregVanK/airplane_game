@@ -127,6 +127,16 @@ namespace GEX {
 	{
 		return false;
 	}
+	bool SceneNode::isMarkedForRemoval() const
+	{
+		return isDestroyed();
+	}
+	void SceneNode::removeWrecks()
+	{
+		auto wreckfieldBegin = std::remove_if(_children.begin(), _children.end(), std::mem_fn(&SceneNode::isMarkedForRemoval));
+		_children.erase(wreckfieldBegin, _children.end());
+		std::for_each(_children.begin(), _children.end(),std::mem_fn(&SceneNode::removeWrecks));
+	}
 	float distance(const SceneNode & rhs, const SceneNode & lhs)
 	{
 		return length(lhs.getWorldPosition() - rhs.getWorldPosition());

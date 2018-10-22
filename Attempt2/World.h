@@ -36,6 +36,9 @@ namespace GEX {
 
 		sf::FloatRect					getViewBounds() const;
 		sf::FloatRect					getBattlefieldBounds() const;
+		bool							hasAlivePlayer() const;
+		bool							hasPlayerReachedEnd() const;
+		void							destroyEntitesOutOfView();
 	private:
 		enum Layer {
 			Background = 0,

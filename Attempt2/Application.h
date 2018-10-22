@@ -17,6 +17,7 @@
 #include "MenuState.h"
 #include "TitleState.h"
 #include "GexState.h"
+#include "GameOverState.h"
 class Application
 {
 public:

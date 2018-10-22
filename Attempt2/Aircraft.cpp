@@ -20,6 +20,7 @@ namespace GEX {
 		_sprite(textures.get(TABLE.at(type).texture)),
 		_healthDisplay(nullptr),
 		_missileDisplay(nullptr),
+		_isMarkedForRemoval(false),
 		_travelDistance(0.f),
 		_directionIndex(0),
 		_fireRateLevel(1),
@@ -39,11 +40,19 @@ namespace GEX {
 		_launchMissileCommand.action = [this, &textures](SceneNode& node, sf::Time dt) {
 			createProjectile(node, Projectile::Type::Missile, 0.f, 0.5f, textures);
 		};
+		_dropPickupCommand.category = Category::AirSceneLayer;
+		_dropPickupCommand.action = [this, &textures](SceneNode& node, sf::Time dt) {
+			createPickup(node, textures);
+		};
 		centerOrigin(_sprite);
 
 		std::unique_ptr<TextNode> health(new TextNode(""));
 		_healthDisplay = health.get();
 		attachChild(std::move(health));
+
+		std::unique_ptr<TextNode> missile(new TextNode(""));
+		_missileDisplay = missile.get();
+		attachChild(std::move(missile));
 
 	}
 	
@@ -72,6 +81,12 @@ namespace GEX {
 		_healthDisplay->setText(std::to_string(getHitPoints()) + "HP");
 		_healthDisplay->setPosition(0.f, 50.f);
 		_healthDisplay->setRotation(-getRotation());
+
+		if (isAllied())
+		{
+			_missileDisplay->setText("M:" + std::to_string(_missileAmmo));
+			_missileDisplay->setPosition(0.f, 70.f);
+		}
 	}
 
 	void Aircraft::fire()
@@ -107,12 +122,30 @@ namespace GEX {
 		return getWorldTransform().transformRect(_sprite.getGlobalBounds());
 	}
 
+	bool Aircraft::isMarkedForRemoval() const
+	{
+		return _isMarkedForRemoval;
+	}
+
 	void Aircraft::updateCurrent(sf::Time dt, CommandQueue& commands)
 	{
 		updateMovementPattern(dt);
 		checkProjectileLauncher(dt, commands);
+		if (isDestroyed() && !isAllied()) {
+			checkPickupDrop(commands);
+
+			_isMarkedForRemoval = true;
+			return;
+		}
 		Entity::updateCurrent(dt,commands);
 		updateTexts();
+	}
+
+	void Aircraft::checkPickupDrop(CommandQueue & commands)
+	{
+		if (!isAllied() && randomInt(3) == 0)
+			commands.push(_dropPickupCommand);
+
 	}
 
 	void Aircraft::updateMovementPattern(sf::Time dt)
@@ -170,6 +203,16 @@ namespace GEX {
 		projectile->setPosition(getWorldPosition() + offset * sign);
 		projectile->setVelocity(velocity * sign);
 		node.attachChild(std::move(projectile));
+	}
+
+	void Aircraft::createPickup(SceneNode & node, const TextureManager & textures)
+	{
+		auto type = static_cast<Pickup::Type>(1);//randomInt(static_cast<int>(Pickup::Type::Count)));
+
+		std::unique_ptr<Pickup> pickup(new Pickup(type, textures));
+		pickup->setPosition(getWorldPosition());
+		pickup->setVelocity(0.f, 0.f);
+		node.attachChild(std::move(pickup));
 	}
 
 	void Aircraft::checkProjectileLauncher(sf::Time dt, CommandQueue & commands)

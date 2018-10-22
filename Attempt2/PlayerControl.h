@@ -23,18 +23,26 @@ namespace GEX {
 		FireBullet,
 		LaunchMissile
 	};
+	enum class MissionStatus {
+		MissionRunning,
+		MissionSuccess,
+		MissionFailure
+	};
 	class PlayerControl
 	{
 	public:
 		PlayerControl();
 		void			handleEvent(const sf::Event& event, CommandQueue& commands);
 		void			handleRealTimeInput(CommandQueue& commands);
+		void			setMissionStatus(MissionStatus status);
+		MissionStatus	getMissionStatus() const;
 	private:
 		void			initalizeActions();
 		static bool		isRealTimeAction(Action action);
 	private:
 		std::map<sf::Keyboard::Key, Action> _keyBindings;
 		std::map<Action, Command>			_actionBindings;
+		MissionStatus						_currentMissionStatus;
 	};
 }
 

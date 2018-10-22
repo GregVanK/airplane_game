@@ -5,6 +5,7 @@ namespace GEX {
 		Menu,
 		Game,
 		Pause,
+		GameOver,
 		Gex,
 		None
 	};

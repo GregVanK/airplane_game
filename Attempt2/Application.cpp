@@ -103,4 +103,5 @@ void Application::registerStates()
 	_stateStack.registerState<Gamestate>(GEX::StateID::Game);
 	_stateStack.registerState<PauseState>(GEX::StateID::Pause);
 	_stateStack.registerState<GexState>(GEX::StateID::Gex);
+	_stateStack.registerState<GameOverState>(GEX::StateID::GameOver);
 }

@@ -14,7 +14,8 @@ namespace GEX {
 			HealthRefill,
 			MissileRefill,
 			FireSpread,
-			FireRate
+			FireRate,
+			Count
 		};
 		Pickup(Type type, const TextureManager& textures);
 		~Pickup() = default;

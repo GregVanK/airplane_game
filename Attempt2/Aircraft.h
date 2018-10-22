@@ -26,13 +26,17 @@ namespace GEX {
 		void						increaseFireSpread();
 		void						collectMissiles(unsigned int count);
 		sf::FloatRect				getBoundingBox()const override;
+
+		bool						isMarkedForRemoval() const override;
 	protected:
 		void						updateCurrent(sf::Time dt, CommandQueue& commands) override;
 	private:
+		void						checkPickupDrop(CommandQueue& commands);
 		void						updateMovementPattern(sf::Time dt);
 		float						getMaxSpeed() const;
 		void						createBullets(SceneNode& node, const TextureManager& textures);
 		void						createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureManager& textures);
+		void						createPickup(SceneNode& node, const TextureManager& textures);
 		void						checkProjectileLauncher(sf::Time dt, CommandQueue& commands);
 		bool						isAllied();
 	private:
@@ -40,6 +44,8 @@ namespace GEX {
 		AircraftType				_type;
 		TextNode*					_healthDisplay;
 		TextNode*					_missileDisplay;
+
+		bool						_isMarkedForRemoval;
 
 		float						_travelDistance;
 		std::size_t					_directionIndex;
@@ -54,6 +60,7 @@ namespace GEX {
 
 		Command						_fireCommand;
 		Command						_launchMissileCommand;
+		Command						_dropPickupCommand;
 	};
 }
 

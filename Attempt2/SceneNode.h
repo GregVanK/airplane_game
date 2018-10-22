@@ -42,6 +42,9 @@ namespace GEX
 		void						drawBoundingBox(sf::RenderTarget& target, sf::RenderStates states)const;
 		void			checkSceneCollision(SceneNode& rootNode, std::set<Pair>&collisionPair);
 		void			checkNodeCollision(SceneNode& node, std::set<Pair>&collisionPair);
+		void					removeWrecks();
+		virtual bool			isDestroyed() const;
+		virtual bool			isMarkedForRemoval() const;
 	protected:
 		virtual void	updateCurrent(sf::Time dt,CommandQueue& commands);
 		void			updateChildren(sf::Time dt,CommandQueue& commands);
@@ -51,7 +54,8 @@ namespace GEX
 		void			drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
 
 		
-		virtual bool			isDestroyed() const;
+		
+		
 	private:
 		SceneNode*			_parent;
 		std::vector <Ptr>	_children;
