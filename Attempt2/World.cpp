@@ -1,5 +1,6 @@
 #include "World.h"
 #include"Aircraft.h"
+#include "Pickup.h"
 
 
 namespace GEX {
@@ -37,6 +38,8 @@ namespace GEX {
 			_sceneGraph.onCommand(_command.pop(), dt);
 		}
 
+		handleCollisions();
+
 		adaptPlayerVelocity();
 		_sceneGraph.update(dt,_command);
 		adaptPlayerPosition();
@@ -71,12 +74,23 @@ namespace GEX {
 	}
 	void World::addEnemies()
 	{
-		addEnemy(AircraftType::Raptor, -250.f, 200.f);
-		addEnemy(AircraftType::Raptor, 0.f, 900.f);
-		addEnemy(AircraftType::Raptor, 250.f, 300.f);
+		addEnemy(AircraftType::Raptor, -250.f, 800.f);
+		addEnemy(AircraftType::Raptor, -500.f, 900.f);
+		addEnemy(AircraftType::Raptor, 500.f, 900.f);
+		addEnemy(AircraftType::Raptor, 250.f, 1500.f);
+		addEnemy(AircraftType::Raptor, 350.f, 1500.f);
+		addEnemy(AircraftType::Raptor, 250.f, 1500.f);
+		addEnemy(AircraftType::Raptor, 150.f, 1500.f);
+		addEnemy(AircraftType::Raptor, -50.f, 1500.f);
+		addEnemy(AircraftType::Raptor, 150.f, 1500.f);
+		addEnemy(AircraftType::Raptor, 250.f, 1500.f);
+		addEnemy(AircraftType::Raptor, 350.f, 1500.f);
 
 		addEnemy(AircraftType::Avenger, -70.f, 900.f);
+		addEnemy(AircraftType::Avenger, -200.f, 700.f);
+		addEnemy(AircraftType::Avenger, -150.f, 300.f);
 		addEnemy(AircraftType::Avenger, 70.f, 500.f);
+		addEnemy(AircraftType::Avenger, 120.f, 1200.f);
 
 		std::sort(_enemySpawnPoints.begin(), _enemySpawnPoints.end(), [](SpawnPoint lhs, SpawnPoint rhs) {
 			return lhs.y < rhs.y;
@@ -120,6 +134,10 @@ namespace GEX {
 		_textures.load(GEX::TextureID::Avenger, "Media/Textures/Avenger.png");
 		_textures.load(GEX::TextureID::Bullet, "Media/Textures/Bullet.png");
 		_textures.load(GEX::TextureID::Missile, "Media/Textures/Missile.png");
+		_textures.load(GEX::TextureID::HealthRefill, "Media/Textures/HealthRefill.png");
+		_textures.load(GEX::TextureID::FireRate, "Media/Textures/FireRate.png");
+		_textures.load(GEX::TextureID::FireSpread, "Media/Textures/FireSpread.png");
+		_textures.load(GEX::TextureID::MissileRefill, "Media/Textures/MissileRefill.png");
 		
 	}
 	void World::buildScene()
@@ -184,5 +202,49 @@ namespace GEX {
 		_command.push(missileGuider);
 		_activeEnemies.clear();
 
+	}
+	bool matchesCategories(SceneNode::Pair& colliders, Category::Type type1, Category::Type type2)
+	{
+		unsigned int category1 = colliders.first->getCategory();
+		unsigned int category2 = colliders.second->getCategory();
+
+		if (type1 & category1  && type2 & category2) {
+			return true;
+		}
+		if (type1 & category2  && type2 & category1) {
+			std::swap(colliders.first, colliders.second);
+			return true;
+		}
+		return false;
+	}
+
+	void World::handleCollisions()
+	{
+		//build list of colliding pairs of scenenodes
+		std::set<SceneNode::Pair> collisionPairs;
+		_sceneGraph.checkSceneCollision(_sceneGraph, collisionPairs);
+		for (SceneNode::Pair pair : collisionPairs) {
+			if (matchesCategories(pair, Category::Type::PlayerAircraft, Category::Type::EnemyAircraft)) {
+				auto& player = static_cast<Aircraft&>(*(pair.first));
+				auto& enemy = static_cast<Aircraft&>(*(pair.second));
+				player.damage(enemy.getHitPoints());
+				enemy.destroy();
+			}
+			else if (matchesCategories(pair, Category::Type::PlayerAircraft, Category::Type::Pickup)) {
+				auto& player = static_cast<Aircraft&>(*(pair.first));
+				auto& pickup = static_cast<Pickup&>(*(pair.second));
+				pickup.apply(player);
+				pickup.destroy();
+			}
+			else if (matchesCategories(pair, Category::Type::PlayerAircraft, Category::Type::EnemeyProjectile) ||
+				(matchesCategories(pair, Category::Type::EnemyAircraft, Category::Type::AlliedProjectile))) {
+				auto& aircraft = static_cast<Aircraft&>(*(pair.first));
+				auto& projectile = static_cast<Projectile&>(*(pair.second));
+				
+ 				aircraft.damage(projectile.getDamage());
+				projectile.destroy();
+
+			}
+		}
 	}
 }

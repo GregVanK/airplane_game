@@ -54,9 +54,9 @@ std::map<GEX::AircraftType, GEX::AircraftData> GEX::initalizeAircraftData()
 	data[AircraftType::Raptor].hitpoints = 20;
 	data[AircraftType::Raptor].speed = 200.f;
 	data[AircraftType::Raptor].texture = TextureID::Raptor;
-	data[AircraftType::Raptor].directions.emplace_back(Direction(20.f, 100.f));
-	data[AircraftType::Raptor].directions.emplace_back(Direction(-40.f, 400.f));
-	data[AircraftType::Raptor].directions.emplace_back(Direction(20.f, 100.f));
+	data[AircraftType::Raptor].directions.emplace_back(Direction(40.f, 100.f));
+	data[AircraftType::Raptor].directions.emplace_back(Direction(-80.f, 100.f));
+	data[AircraftType::Raptor].directions.emplace_back(Direction(40.f, 100.f));
 	data[AircraftType::Raptor].fireInterval = sf::Time::Zero;
 
 

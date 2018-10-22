@@ -109,8 +109,30 @@ namespace GEX {
 			child->draw(target, states);
 		}
 	}
+	void SceneNode::checkSceneCollision(SceneNode & rootNode, std::set<Pair>& collisionPair)
+	{
+		checkNodeCollision(rootNode, collisionPair);
+		for (Ptr& c : rootNode._children)
+			checkSceneCollision(*c, collisionPair);
+	}
+	void SceneNode::checkNodeCollision(SceneNode & node, std::set<Pair>& collisionPair)
+	{
+		if (this != &node && collision(*this, node) && !isDestroyed() && !node.isDestroyed())
+			collisionPair.insert(std::minmax(this, &node));
+
+		for (Ptr& c : _children)
+			c->checkNodeCollision(node, collisionPair);
+	}
+	bool SceneNode::isDestroyed() const
+	{
+		return false;
+	}
 	float distance(const SceneNode & rhs, const SceneNode & lhs)
 	{
 		return length(lhs.getWorldPosition() - rhs.getWorldPosition());
+	}
+	float collision(const SceneNode & rhs, const SceneNode & lhs)
+	{
+		return lhs.getBoundingBox().intersects(rhs.getBoundingBox());
 	}
 }

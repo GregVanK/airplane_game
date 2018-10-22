@@ -55,6 +55,7 @@ namespace GEX {
 		void							loadTextures();
 		void							buildScene();
 		void							guideMissiles();
+		void							handleCollisions();
 	private:
 		sf::RenderWindow&				_window;
 		sf::View						_worldview;

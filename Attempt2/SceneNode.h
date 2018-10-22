@@ -12,6 +12,7 @@
 #include <memory>
 #include "Category.h"
 #include "Utility.h"
+#include <set>
 //forward declaration
 
 namespace GEX
@@ -22,6 +23,7 @@ namespace GEX
 	{
 	public:
 		using Ptr = std::unique_ptr<SceneNode> ;
+		using Pair = std::pair<SceneNode*, SceneNode*>;
 	public:
 		SceneNode(Category::Type category = Category::Type::None);
 		virtual			~SceneNode() = default;
@@ -38,6 +40,8 @@ namespace GEX
 		virtual unsigned int		getCategory() const;
 		virtual sf::FloatRect		getBoundingBox() const;
 		void						drawBoundingBox(sf::RenderTarget& target, sf::RenderStates states)const;
+		void			checkSceneCollision(SceneNode& rootNode, std::set<Pair>&collisionPair);
+		void			checkNodeCollision(SceneNode& node, std::set<Pair>&collisionPair);
 	protected:
 		virtual void	updateCurrent(sf::Time dt,CommandQueue& commands);
 		void			updateChildren(sf::Time dt,CommandQueue& commands);
@@ -45,11 +49,15 @@ namespace GEX
 		void			draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 		virtual void	drawcurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 		void			drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
+
+		
+		virtual bool			isDestroyed() const;
 	private:
 		SceneNode*			_parent;
 		std::vector <Ptr>	_children;
 		Category::Type		_category;
 	};
 	float distance(const SceneNode& rhs, const SceneNode& lhs);
+	float collision(const SceneNode& rhs, const SceneNode& lhs);
 }
 

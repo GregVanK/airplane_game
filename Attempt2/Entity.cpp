@@ -63,6 +63,7 @@ void GEX::Entity::destroy()
 
 bool GEX::Entity::isDestroyed() const
 {
+
 	return _hitPoints <= 0;
 }
 
