@@ -132,7 +132,7 @@ namespace GEX {
 	}
 	bool World::hasAlivePlayer() const
 	{
-		return !_player->isMarkedForRemoval();
+		return !_player->isDestroyed();
 	}
 	bool World::hasPlayerReachedEnd() const
 	{

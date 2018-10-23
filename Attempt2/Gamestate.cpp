@@ -13,6 +13,14 @@
 	}
 	bool Gamestate::update(sf::Time dt)
 	{
+		if (!_world.hasAlivePlayer()) {
+			player.setMissionStatus(GEX::MissionStatus::MissionFailure);
+			requestStackPush(GEX::StateID::GameOver);
+		}
+		else if (_world.hasPlayerReachedEnd()) {
+			player.setMissionStatus(GEX::MissionStatus::MissionSuccess);
+			requestStackPush(GEX::StateID::GameOver);
+		}
 		_world.update(dt);
 		GEX::CommandQueue& commands = _world.getCommandQueue();
 		player.handleRealTimeInput(commands);
