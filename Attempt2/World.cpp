@@ -79,22 +79,35 @@ namespace GEX {
 	void World::addEnemies()
 	{
 		addEnemy(AircraftType::Raptor, -250.f, 800.f);
-		addEnemy(AircraftType::Raptor, -500.f, 900.f);
-		addEnemy(AircraftType::Raptor, 500.f, 900.f);
-		addEnemy(AircraftType::Raptor, 250.f, 1500.f);
-		addEnemy(AircraftType::Raptor, 350.f, 1500.f);
-		addEnemy(AircraftType::Raptor, 250.f, 1500.f);
+		addEnemy(AircraftType::Raptor, 250.f, 700.f);
+		addEnemy(AircraftType::Raptor, 0.f, 700.f);
+		addEnemy(AircraftType::Raptor, -250.f, 700.f);
+		addEnemy(AircraftType::Raptor, -100.f, 900.f);
+		addEnemy(AircraftType::Raptor, 100.f, 900.f);
+		addEnemy(AircraftType::Raptor, 200.f, 1500.f);
 		addEnemy(AircraftType::Raptor, 150.f, 1500.f);
+		addEnemy(AircraftType::Raptor, 100.f, 1500.f);
+		addEnemy(AircraftType::Raptor, 50.f, 1500.f);
+		addEnemy(AircraftType::Raptor, 0.f, 1500.f);
 		addEnemy(AircraftType::Raptor, -50.f, 1500.f);
-		addEnemy(AircraftType::Raptor, 150.f, 1500.f);
-		addEnemy(AircraftType::Raptor, 250.f, 1500.f);
-		addEnemy(AircraftType::Raptor, 350.f, 1500.f);
+		addEnemy(AircraftType::Raptor, -100.f, 1500.f);
+		addEnemy(AircraftType::Raptor, -150.f, 1500.f);
+		addEnemy(AircraftType::Raptor, -200.f, 1500.f);
 
-		addEnemy(AircraftType::Avenger, -70.f, 900.f);
-		addEnemy(AircraftType::Avenger, -200.f, 700.f);
-		addEnemy(AircraftType::Avenger, -150.f, 300.f);
 		addEnemy(AircraftType::Avenger, 70.f, 500.f);
-		addEnemy(AircraftType::Avenger, 120.f, 1200.f);
+		addEnemy(AircraftType::Avenger, -150.f, 300.f);
+		addEnemy(AircraftType::Avenger, -200.f, 700.f);
+		addEnemy(AircraftType::Avenger, -70.f, 900.f);
+		addEnemy(AircraftType::Avenger, 0.f, 1200.f);
+		addEnemy(AircraftType::Avenger, 100.f, 1300.f);
+		addEnemy(AircraftType::Avenger, 200.f, 1300.f);
+		addEnemy(AircraftType::Avenger, -100.f, 1300.f);
+		addEnemy(AircraftType::Avenger, -200.f, 1300.f);
+		addEnemy(AircraftType::Avenger, -200.f, 1300.f);
+		addEnemy(AircraftType::Avenger, -200.f, 1300.f);
+
+		addEnemy(AircraftType::Avenger, -200.f, 1300.f);
+
 
 		std::sort(_enemySpawnPoints.begin(), _enemySpawnPoints.end(), [](SpawnPoint lhs, SpawnPoint rhs) {
 			return lhs.y < rhs.y;
@@ -151,15 +164,8 @@ namespace GEX {
 	void World::loadTextures()
 	{
 		_textures.load(GEX::TextureID::Landscape, "Media/Backgrounds/Space.png");
-		_textures.load(GEX::TextureID::Eagle, "Media/Textures/Eagle.png");
-		_textures.load(GEX::TextureID::Raptor, "Media/Textures/Raptor.png");
-		_textures.load(GEX::TextureID::Avenger, "Media/Textures/Avenger.png");
-		_textures.load(GEX::TextureID::Bullet, "Media/Textures/Bullet.png");
-		_textures.load(GEX::TextureID::Missile, "Media/Textures/Missile.png");
-		_textures.load(GEX::TextureID::HealthRefill, "Media/Textures/HealthRefill.png");
-		_textures.load(GEX::TextureID::FireRate, "Media/Textures/FireRate.png");
-		_textures.load(GEX::TextureID::FireSpread, "Media/Textures/FireSpread.png");
-		_textures.load(GEX::TextureID::MissileRefill, "Media/Textures/MissileRefill.png");
+		_textures.load(GEX::TextureID::Entities, "Media/Textures/Entities.png");
+		_textures.load(GEX::TextureID::Boss, "Media/Textures/Boss.png");
 		
 	}
 	void World::buildScene()

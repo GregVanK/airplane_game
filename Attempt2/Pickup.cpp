@@ -7,7 +7,7 @@ namespace {
 GEX::Pickup::Pickup(Type type, const TextureManager & textures):
 	Entity(1),
 	_type(type),
-	_sprite(textures.get(TABLE.at(type).texture))
+	_sprite(textures.get(TABLE.at(type).texture), TABLE.at(type).textureRect)
 {
 }
 

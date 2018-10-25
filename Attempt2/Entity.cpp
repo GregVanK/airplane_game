@@ -52,7 +52,7 @@ void GEX::Entity::damage(int points)
 
 void GEX::Entity::repair(int points)
 {
-	assert(points < 0);
+	assert(points > 0);
 	_hitPoints += points;
 }
 
