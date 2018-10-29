@@ -50,11 +50,11 @@ std::map<GEX::Projectile::Type, GEX::ProjectileData> GEX::initalizeProjectileDat
 std::map<GEX::Particle::Type, GEX::ParticleData> GEX::initalizeParticleData()
 {
 	std::map<GEX::Particle::Type, GEX::ParticleData> data;
-	data[GEX::Particle::Type::Propellant].color == sf::Color(255, 255, 50);
+	data[GEX::Particle::Type::Propellant].color = sf::Color(50, 150, 100);
 	data[GEX::Particle::Type::Propellant].lifetime = sf::seconds(0.6f);
 
-	data[GEX::Particle::Type::Smoke].color == sf::Color(50, 50, 50);
-	data[GEX::Particle::Type::Smoke].lifetime = sf::seconds(0.4f);
+	data[GEX::Particle::Type::Smoke].color = sf::Color(100, 150, 50);
+	data[GEX::Particle::Type::Smoke].lifetime = sf::seconds(0.8f);
 
 	return data;
 }
@@ -69,6 +69,7 @@ std::map<GEX::AircraftType, GEX::AircraftData> GEX::initalizeAircraftData()
 	data[AircraftType::Eagle].texture = TextureID::Entities;
 	data[AircraftType::Eagle].textureRect = sf::IntRect(0, 0, 48, 64);
 	data[AircraftType::Eagle].fireInterval = sf::seconds(0.5);
+	data[AircraftType::Eagle].hasRollAnimation = true;
 
 	data[AircraftType::Raptor].hitpoints = 20;
 	data[AircraftType::Raptor].speed = 200.f;
@@ -78,6 +79,7 @@ std::map<GEX::AircraftType, GEX::AircraftData> GEX::initalizeAircraftData()
 	data[AircraftType::Raptor].directions.emplace_back(Direction(-80.f, 100.f));
 	data[AircraftType::Raptor].directions.emplace_back(Direction(40.f, 100.f));
 	data[AircraftType::Raptor].fireInterval = sf::Time::Zero;
+	data[AircraftType::Raptor].hasRollAnimation = false;
 
 
 	data[AircraftType::Avenger].hitpoints = 40;
@@ -90,6 +92,7 @@ std::map<GEX::AircraftType, GEX::AircraftData> GEX::initalizeAircraftData()
 	data[AircraftType::Avenger].directions.emplace_back(Direction(0.f, 50.f));
 	data[AircraftType::Avenger].directions.emplace_back(Direction(45.f, 50.f));
 	data[AircraftType::Avenger].fireInterval = sf::seconds(2);
+	data[AircraftType::Avenger].hasRollAnimation = false;
 
 	data[AircraftType::Boss].hitpoints = 1200;
 	data[AircraftType::Boss].speed = 200.f;

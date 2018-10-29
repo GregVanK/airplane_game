@@ -28,6 +28,7 @@ namespace GEX {
 		sf::FloatRect				getBoundingBox()const override;
 
 		bool						isMarkedForRemoval() const override;
+		void						updateRollAnimation();//TODO::Set animatio based on current velocity
 	protected:
 		void						updateCurrent(sf::Time dt, CommandQueue& commands) override;
 	private:
@@ -39,9 +40,16 @@ namespace GEX {
 		void						createPickup(SceneNode& node, const TextureManager& textures);
 		void						checkProjectileLauncher(sf::Time dt, CommandQueue& commands);
 		bool						isAllied();
+		void						remove() override;
 	private:
+		Animation					explosion;
 		sf::Sprite					_sprite;
+		
+		bool						showExplosion;
+		//Animation					shortExplosion;
+		bool						_spawnPickup;
 		AircraftType				_type;
+
 		TextNode*					_healthDisplay;
 		TextNode*					_missileDisplay;
 

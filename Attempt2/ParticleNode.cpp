@@ -24,6 +24,8 @@ namespace GEX {
 		particle.position = position;
 		particle.color = TABLE.at(_type).color;
 		particle.lifetime = TABLE.at(_type).lifetime;
+
+		_particles.push_back(particle);
 	}
 
 	Particle::Type ParticleNode::getParticleType() const
@@ -43,7 +45,7 @@ namespace GEX {
 			_particles.pop_front();
 
 		//decrement lifespan
-		for (auto& p : _particles)
+		for (Particle& p : _particles)
 			p.lifetime -= dt;
 
 		//marks for update
@@ -79,6 +81,7 @@ namespace GEX {
 		sf::Vector2f size(_texture.getSize());
 		sf::Vector2f half = size / 2.f;
 
+		_vertexArray.clear();
 		//refill vertex array;
 		for (const Particle& p : _particles) {
 			sf::Vector2f pos = p.position;

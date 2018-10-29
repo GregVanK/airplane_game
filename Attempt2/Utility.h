@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Text.hpp>
 #include <cmath>
 #include <assert.h>
+#include "Animation.h"
 #pragma once
 namespace sf {
 	class Sprite;
@@ -10,6 +11,7 @@ namespace sf {
 }
 void centerOrigin(sf::Sprite& sprite);
 void centerOrigin(sf::Text& text);
+void centerOrigin(GEX::Animation& animation);
 
 float			toDegrees(float radian);
 float			toRadian(float degrees);

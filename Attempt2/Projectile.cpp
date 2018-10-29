@@ -2,6 +2,7 @@
 #include "DataTables.h"
 #include "Utility.h"
 #include "Category.h"
+#include "EmitterNode.h"
 namespace {
 	const std::map<GEX::Projectile::Type, GEX::ProjectileData>TABLE = GEX::initalizeProjectileData();
 }
@@ -10,6 +11,17 @@ _type(type),
 _sprite(textures.get(TABLE.at(type).texture),TABLE.at(type).textureRect)
 {
 	centerOrigin(_sprite);
+	if (isGuided()) {
+		std::unique_ptr<EmitterNode> smoke(new EmitterNode(Particle::Type::Smoke));
+		smoke->setPosition(0.f, Projectile::getBoundingBox().height / 2.f);
+		attachChild(std::move(smoke));
+
+		std::unique_ptr<EmitterNode> fire(new EmitterNode(Particle::Type::Propellant));
+		fire->setPosition(0.f, Projectile::getBoundingBox().height / 2.f);
+		attachChild(std::move(fire));
+
+		
+	}
 	
 }
 

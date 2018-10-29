@@ -42,7 +42,8 @@ namespace GEX {
 	private:
 		enum Layer {
 			Background = 0,
-			Air,
+			LowerAir,
+			UpperAir,
 			LayerCount
 		};
 		struct SpawnPoint {

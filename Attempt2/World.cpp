@@ -1,7 +1,7 @@
 #include "World.h"
 #include"Aircraft.h"
 #include "Pickup.h"
-
+#include "ParticleNode.h"
 
 namespace GEX {
 
@@ -128,7 +128,7 @@ namespace GEX {
 			std::unique_ptr<Aircraft> enemy(new Aircraft(spawnPoint.type, _textures));
 			enemy->setPosition(spawnPoint.x, spawnPoint.y);
 			enemy->setRotation(180);
-			_sceneLayers[Air]->attachChild(std::move(enemy));
+			_sceneLayers[UpperAir]->attachChild(std::move(enemy));
 			_enemySpawnPoints.pop_back();
 		}
 	}
@@ -166,17 +166,26 @@ namespace GEX {
 		_textures.load(GEX::TextureID::Landscape, "Media/Backgrounds/Space.png");
 		_textures.load(GEX::TextureID::Entities, "Media/Textures/Entities.png");
 		_textures.load(GEX::TextureID::Boss, "Media/Textures/Boss.png");
-		
+		_textures.load(GEX::TextureID::Particle, "Media/Textures/Particle.png");
+		_textures.load(GEX::TextureID::Explosion, "Media/Textures/Explosion.png");
+		_textures.load(GEX::TextureID::FinishLine, "Media/Textures/FinishLine.png");
 	}
 	void World::buildScene()
 	{
 		//initalizes layers
 		for (int i = 0; i < LayerCount; ++i) {
-			auto category = (i == Air) ? Category::Type::AirSceneLayer : Category::Type::None;
+			auto category = (i == UpperAir) ? Category::Type::AirSceneLayer : Category::Type::None;
 			SceneNode::Ptr layer(new SceneNode(category));
 			_sceneLayers.push_back(layer.get());
 			_sceneGraph.attachChild(std::move(layer));
 		}
+		//Particle Systems
+		std::unique_ptr<ParticleNode> smoke(new ParticleNode(Particle::Type::Smoke,_textures));
+		_sceneLayers[LowerAir]->attachChild(std::move(smoke));
+
+		std::unique_ptr<ParticleNode> fire(new ParticleNode(Particle::Type::Propellant, _textures));
+		_sceneLayers[LowerAir]->attachChild(std::move(fire));
+
 		//draw background
 		sf::Texture& texture = _textures.get(TextureID::Landscape);
 		sf::IntRect textureRect(_worldBounds);
@@ -190,7 +199,7 @@ namespace GEX {
 		leader->setPosition(_spawnPosition);
 		leader->setVelocity(50.f, _scrollSpeeds);
 		_player = leader.get();
-		_sceneLayers[Air]->attachChild(std::move(leader));
+		_sceneLayers[UpperAir]->attachChild(std::move(leader));
 		//add escort planes;
 
 		//Enemy aircrafts
