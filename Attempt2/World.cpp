@@ -3,6 +3,7 @@
 #include "Pickup.h"
 #include "ParticleNode.h"
 #include <SFML\Graphics\RenderTarget.hpp>
+
 namespace GEX {
 
 	World::World(sf::RenderTarget& outputTarget) : _target(outputTarget),
@@ -12,7 +13,9 @@ namespace GEX {
 		_sceneLayers(),
 		_worldBounds(0.f, 0.f, _worldview.getSize().x, 5000.f),
 		_spawnPosition(_worldview.getSize().x / 2.f, _worldBounds.height - _worldview.getSize().y / 2.f),
-		_scrollSpeeds(-50.f)		
+		_scrollSpeeds(-50.f),
+		_bloomEffect()
+
 	{
 		_sceneTexture.create(_target.getSize().x, _target.getSize().y);
 		loadTextures();
@@ -70,8 +73,19 @@ namespace GEX {
 	}
 	void World::draw()
 	{
-		_target.setView(_worldview);
-		_target.draw(_sceneGraph);
+		if (PostEffect::isSupported()) {
+			_sceneTexture.clear();
+			_sceneTexture.setView(_worldview);
+			_sceneTexture.draw(_sceneGraph);
+			_sceneTexture.display();
+			_bloomEffect.apply(_sceneTexture, _target);
+		}
+		else
+		{
+			_target.setView(_worldview);
+			_target.draw(_sceneGraph);
+		}
+		
 	}
 	CommandQueue & World::getCommandQueue()
 	{
@@ -103,10 +117,6 @@ namespace GEX {
 		addEnemy(AircraftType::Avenger, 100.f, 1300.f);
 		addEnemy(AircraftType::Avenger, 200.f, 1300.f);
 		addEnemy(AircraftType::Avenger, -100.f, 1300.f);
-		addEnemy(AircraftType::Avenger, -200.f, 1300.f);
-		addEnemy(AircraftType::Avenger, -200.f, 1300.f);
-		addEnemy(AircraftType::Avenger, -200.f, 1300.f);
-
 		addEnemy(AircraftType::Avenger, -200.f, 1300.f);
 
 

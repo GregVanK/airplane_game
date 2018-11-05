@@ -72,7 +72,11 @@ namespace GEX {
 		if (isDestroyed() && showExplosion) {
 			target.draw(explosion,states);
 		}
-		target.draw(_sprite, states);
+		else
+		{
+			target.draw(_sprite, states);
+		}
+		
 	}
 	unsigned int Aircraft::getCategory() const
 	{
@@ -136,6 +140,7 @@ namespace GEX {
 
 	bool Aircraft::isMarkedForRemoval() const
 	{
+		_healthDisplay->setText("");
 		return (isDestroyed() && (explosion.isFinished() || !showExplosion));
 	}
 

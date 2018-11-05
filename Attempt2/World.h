@@ -14,6 +14,8 @@
 #include "Aircraft.h"
 #include "CommandQueue.h"
 #include <vector>
+#include "PostEffect.h"
+#include "BloomEffect.h"
 
 namespace sf {
 	class RenderTarget;
@@ -61,6 +63,7 @@ namespace GEX {
 		void							guideMissiles();
 		void							handleCollisions();
 	private:
+		BloomEffect						_bloomEffect;
 		sf::RenderTarget&				_target;
 		sf::RenderTexture				_sceneTexture;
 		sf::View						_worldview;

@@ -96,7 +96,7 @@ namespace GEX {
 		drawcurrent(target, states);
 		drawChildren(target, states);
 
-		drawBoundingBox(target, states);
+		//drawBoundingBox(target, states);
 	}
 	void SceneNode::drawcurrent(sf::RenderTarget & target, sf::RenderStates states) const
 	{
