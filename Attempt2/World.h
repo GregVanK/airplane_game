@@ -16,13 +16,13 @@
 #include <vector>
 
 namespace sf {
-	class RenderWindow;
+	class RenderTarget;
 }
 namespace GEX {
 	class World
 	{
 	public:
-		World(sf::RenderWindow& window);
+		World(sf::RenderTarget& outputTarget);
 		~World();
 		void							update(sf::Time dt);
 		void adaptPlayerPosition();
@@ -61,7 +61,8 @@ namespace GEX {
 		void							guideMissiles();
 		void							handleCollisions();
 	private:
-		sf::RenderWindow&				_window;
+		sf::RenderTarget&				_target;
+		sf::RenderTexture				_sceneTexture;
 		sf::View						_worldview;
 		TextureManager					_textures;
 

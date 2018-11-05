@@ -2,18 +2,19 @@
 #include"Aircraft.h"
 #include "Pickup.h"
 #include "ParticleNode.h"
-
+#include <SFML\Graphics\RenderTarget.hpp>
 namespace GEX {
 
-	World::World(sf::RenderWindow& window) : _window(window),
-		_worldview(window.getDefaultView()),
+	World::World(sf::RenderTarget& outputTarget) : _target(outputTarget),
+		_worldview(outputTarget.getDefaultView()),
 		_textures(),
 		_sceneGraph(),
 		_sceneLayers(),
 		_worldBounds(0.f, 0.f, _worldview.getSize().x, 5000.f),
 		_spawnPosition(_worldview.getSize().x / 2.f, _worldBounds.height - _worldview.getSize().y / 2.f),
-		_scrollSpeeds(-50.f)
+		_scrollSpeeds(-50.f)		
 	{
+		_sceneTexture.create(_target.getSize().x, _target.getSize().y);
 		loadTextures();
 		buildScene();
 
@@ -69,8 +70,8 @@ namespace GEX {
 	}
 	void World::draw()
 	{
-		_window.setView(_worldview);
-		_window.draw(_sceneGraph);
+		_target.setView(_worldview);
+		_target.draw(_sceneGraph);
 	}
 	CommandQueue & World::getCommandQueue()
 	{
